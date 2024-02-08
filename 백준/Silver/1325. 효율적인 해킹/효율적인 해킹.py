@@ -7,7 +7,7 @@ A = [[] for _ in range(N+1)]
 answer = [0] * (N+1)
 
 def BFS(v):
-    visited = [0] * (N + 1)
+    visited = [0] * (N + 1) # True, False가 시간을 많이 잡아먹나?????????ㅠ
     queue = deque([v])
     visited[v] = 1
     while queue:
@@ -23,8 +23,8 @@ for _ in range(M):
     A[S].append(E)
 
 for i in range(1, N+1):
-    if len(A[i]) != 0:
-        BFS(i)
+    #if len(A[i]) != 0:
+    BFS(i)
 
 maxVal = max(answer)
 for i in range(1, N+1):
