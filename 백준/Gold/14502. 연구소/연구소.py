@@ -53,27 +53,13 @@ for i in range(n):
 safe = 0 # 안전영역
 c = 0
 for comb in combinations(zeros, 3):
-    #c += 1
-    #print(comb)
     visit = [[0] * m for _ in range(n)]
-    #print(lab)
     lab_c = copy.deepcopy(lab)
     for i, j in comb:
         lab_c[i][j] = 1  # 벽을 세움
-    #print(lab_c)
     bfs()
     tmp = check_safe()
-    #print("tmp = ", tmp)
     if safe < tmp:
         safe = tmp
-    #if tmp >=27:
-    #    for line in lab_c:
-    #        print(line)
-
-    #if c==2: break
-
 
 print(safe)
-
-
-# [0, 1], [1, 0], [3, 5]
