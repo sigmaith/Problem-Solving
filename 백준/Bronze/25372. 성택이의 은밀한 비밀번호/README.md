@@ -4,7 +4,7 @@
 
 ### 성능 요약
 
-메모리: 14784 KB, 시간: 168 ms
+메모리: 109108 KB, 시간: 120 ms
 
 ### 분류
 
@@ -12,7 +12,7 @@
 
 ### 제출 일자
 
-2024년 5월 27일 19:56:40
+2024년 5월 27일 20:00:16
 
 ### 문제 설명
 
@@ -28,9 +28,9 @@
 
 ### 입력 
 
- <p>첫째 줄에 문자열의 총개수 $N$이 주어진다.</p>
+ <p>첫째 줄에 문자열의 총개수 <mjx-container class="MathJax" jax="CHTML" style="font-size: 109%; position: relative;"><mjx-math class="MJX-TEX" aria-hidden="true"><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D441 TEX-I"></mjx-c></mjx-mi></mjx-math><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>N</mi></math></mjx-assistive-mml><span aria-hidden="true" class="no-mathjax mjx-copytext">$N$</span></mjx-container>이 주어진다.</p>
 
-<p>둘째 줄부터 $N$개의 줄에 걸쳐 숫자, 영어 대소문자로만 구성된 문자열이 주어진다.</p>
+<p>둘째 줄부터 <mjx-container class="MathJax" jax="CHTML" style="font-size: 109%; position: relative;"><mjx-math class="MJX-TEX" aria-hidden="true"><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D441 TEX-I"></mjx-c></mjx-mi></mjx-math><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>N</mi></math></mjx-assistive-mml><span aria-hidden="true" class="no-mathjax mjx-copytext">$N$</span></mjx-container>개의 줄에 걸쳐 숫자, 영어 대소문자로만 구성된 문자열이 주어진다.</p>
 
 ### 출력 
 
