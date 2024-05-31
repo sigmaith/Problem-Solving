@@ -4,7 +4,7 @@
 
 ### 성능 요약
 
-메모리: 108080 KB, 시간: 116 ms
+메모리: 18264 KB, 시간: 224 ms
 
 ### 분류
 
@@ -12,13 +12,13 @@
 
 ### 제출 일자
 
-2024년 5월 31일 20:06:35
+2024년 5월 31일 20:34:30
 
 ### 문제 설명
 
 <p>홍준은 참 팬이 많다. 이를 본 구사과는 BOJ 슬랙에서 이모티콘을 만들었다.</p>
 
-<p style="text-align: center;"><img alt="" src="" style="height:78px; width:73px"></p>
+<p style="text-align: center;"><img alt="" src="https://onlinejudgeimages.s3-ap-northeast-1.amazonaws.com/problem/14581/1.png" style="height:78px; width:73px"></p>
 
 <p>선풍기 모양의 이모티콘은 :fan: 이고, 홍준의 이모티콘은 :(홍준의 아이디): 이다. 홍준의 아이디가 주어지면 구사과가 만든 이모티콘을 출력하는 프로그램을 작성하여라. 자세한 출력 방식은 입출력 형식을 참고하면 된다.</p>
 
