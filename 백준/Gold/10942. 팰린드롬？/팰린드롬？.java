@@ -1,68 +1,60 @@
 import java.util.*;
 import java.io.*;
 
-enum palStatus {
+enum palStatus{
     notComputed,
     True,
     False
 };
 
-public class Main {
+public class Main{
     static palStatus[][] dp;
     static int[] A;
-
-    public static void main(String[] args) throws IOException {
-        //
+    public static void main(String[] args) throws Exception{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         int n = Integer.parseInt(br.readLine());
 
         StringTokenizer st = new StringTokenizer(br.readLine());
         A = new int[n];
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i < n; i++){
             A[i] = Integer.parseInt(st.nextToken());
         }
 
-        // System.out.println(Arrays.toString(A));
+        //System.out.println(Arrays.toString(A));
 
         dp = new palStatus[n][n];
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
+        for (int i = 0; i < n; i++){
+            for (int j = 0; j < n; j++){
                 dp[i][j] = palStatus.notComputed;
             }
         }
-        // System.out.println(Arrays.deepToString(dp));
+        //System.out.println(Arrays.deepToString(dp));
         int m = Integer.parseInt(br.readLine());
 
-        for (int i = 0; i < m; i++) {
+        for (int i = 0; i < m; i++){
             int s, f;
             st = new StringTokenizer(br.readLine());
             s = Integer.parseInt(st.nextToken());
             f = Integer.parseInt(st.nextToken());
 
-            // int result = isPal(s - 1, f - 1) == true ? 1 : 0;
-            bw.write(isPal(s - 1, f - 1) + "\n");
+            bw.write(isPal(s-1, f-1) + "\n");
         }
-
         bw.flush();
         bw.close();
         br.close();
-
     }
-
-    public static int isPal(int i, int j) {
-        // base case : 두 index가 같아진다면 true를 반환
-        if (i >= j)
+    static int isPal(int s, int f){
+        if (s >= f) {
             return 1;
-
-        if (dp[i][j] == palStatus.notComputed) {
-            if (A[i] == A[j] && isPal(i + 1, j - 1) == 1) {
-                dp[i][j] = palStatus.True;
-            } else {
-                dp[i][j] = palStatus.False;
-            }
         }
-        // System.out.println(i + " ~ " + j + " :" + dp[i][j]);
-        return dp[i][j] == palStatus.True ? 1 : 0;
+        if (dp[s][f] == palStatus.notComputed){
+            if(A[s] == A[f] && isPal(s+1, f-1) == 1){
+                dp[s][f] = palStatus.True;
+                return 1;
+            }
+            else return 0;
+        }
+        return dp[s][f] == palStatus.True ? 1 : 0;
     }
 }
