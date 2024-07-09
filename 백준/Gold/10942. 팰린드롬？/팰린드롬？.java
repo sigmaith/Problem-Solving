@@ -1,47 +1,68 @@
-// #10942 팰린드롬?
-import java.io.*;
 import java.util.*;
+import java.io.*;
+
+enum palStatus {
+    notComputed,
+    True,
+    False
+};
 
 public class Main {
-    static BufferedReader br;
-    static BufferedWriter bw;
-    static StringTokenizer st;
-    public static void main(String[] main) throws Exception {
-        br = new BufferedReader(new InputStreamReader(System.in));
-        bw = new BufferedWriter(new OutputStreamWriter(System.out));
-        st = new StringTokenizer(br.readLine());
+    static palStatus[][] dp;
+    static int[] A;
 
-        int n = Integer.parseInt(st.nextToken()); // 수열의 크기
-        int[] arr = new int[n+1];
-        st = new StringTokenizer(br.readLine());
-        for (int i=1; i<=n; i++){
-            arr[i] = Integer.parseInt(st.nextToken());
-        } // 수열
-        
-        st = new StringTokenizer(br.readLine());
-        int m = Integer.parseInt(st.nextToken()); // 질문의 개수
+    public static void main(String[] args) throws IOException {
+        //
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        int n = Integer.parseInt(br.readLine());
 
-        for (int i=0; i<m; i++){
-            st = new StringTokenizer(br.readLine());
-            int start = Integer.parseInt(st.nextToken());
-            int end = Integer.parseInt(st.nextToken());
-            int mid = start + (end - start + 1) / 2;
-            int flag = 1;
-            while(start < mid){
-                //bw.write("start = " + arr[start] + "\n");
-                //bw.write("end = " + arr[end] + "\n");
-                //bw.flush();
-                if (arr[start++] != arr[end--]){
-                    flag = 0; 
-                    break;
-                }
-            }
-            if (flag == 1) bw.write(1 + "\n");
-            else bw.write(0 + "\n");
-            //bw.flush();
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        A = new int[n];
+        for (int i = 0; i < n; i++) {
+            A[i] = Integer.parseInt(st.nextToken());
         }
+
+        // System.out.println(Arrays.toString(A));
+
+        dp = new palStatus[n][n];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                dp[i][j] = palStatus.notComputed;
+            }
+        }
+        // System.out.println(Arrays.deepToString(dp));
+        int m = Integer.parseInt(br.readLine());
+
+        for (int i = 0; i < m; i++) {
+            int s, f;
+            st = new StringTokenizer(br.readLine());
+            s = Integer.parseInt(st.nextToken());
+            f = Integer.parseInt(st.nextToken());
+
+            int result = isPal(s - 1, f - 1) == true ? 1 : 0;
+            bw.write(result + "\n");
+        }
+
         bw.flush();
-        br.close();
         bw.close();
+        br.close();
+
+    }
+
+    public static boolean isPal(int i, int j) {
+        // base case : 두 index가 같아진다면 true를 반환
+        if (i >= j)
+            return true;
+
+        if (dp[i][j] == palStatus.notComputed) {
+            if (A[i] == A[j] && isPal(i + 1, j - 1)) {
+                dp[i][j] = palStatus.True;
+            } else {
+                dp[i][j] = palStatus.False;
+            }
+        }
+        // System.out.println(i + " ~ " + j + " :" + dp[i][j]);
+        return dp[i][j] == palStatus.True ? true : false;
     }
 }
