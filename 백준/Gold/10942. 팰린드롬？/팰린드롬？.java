@@ -40,8 +40,8 @@ public class Main {
             s = Integer.parseInt(st.nextToken());
             f = Integer.parseInt(st.nextToken());
 
-            int result = isPal(s - 1, f - 1) == true ? 1 : 0;
-            bw.write(result + "\n");
+            // int result = isPal(s - 1, f - 1) == true ? 1 : 0;
+            bw.write(isPal(s - 1, f - 1) + "\n");
         }
 
         bw.flush();
@@ -50,19 +50,19 @@ public class Main {
 
     }
 
-    public static boolean isPal(int i, int j) {
+    public static int isPal(int i, int j) {
         // base case : 두 index가 같아진다면 true를 반환
         if (i >= j)
-            return true;
+            return 1;
 
         if (dp[i][j] == palStatus.notComputed) {
-            if (A[i] == A[j] && isPal(i + 1, j - 1)) {
+            if (A[i] == A[j] && isPal(i + 1, j - 1) == 1) {
                 dp[i][j] = palStatus.True;
             } else {
                 dp[i][j] = palStatus.False;
             }
         }
         // System.out.println(i + " ~ " + j + " :" + dp[i][j]);
-        return dp[i][j] == palStatus.True ? true : false;
+        return dp[i][j] == palStatus.True ? 1 : 0;
     }
 }
