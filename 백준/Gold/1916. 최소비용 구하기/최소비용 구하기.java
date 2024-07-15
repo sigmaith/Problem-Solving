@@ -2,7 +2,7 @@
 import java.io.*;
 import java.util.*;
 
-class Node implements Comparable<Node>{
+class Node {
     private int idx;
     private int dist;
     public Node(int idx, int dist) {
@@ -16,13 +16,13 @@ class Node implements Comparable<Node>{
         return this.dist;
     }
     // 거리(비용)이 더 짧은 것이 더 높은 우선순위를 가지도록 설정
-    @Override
-    public int compareTo(Node other) {
-        if (this.dist < other.dist) {
-            return -1; // 음수가 더 높은 우선순위 
-        }
-        return 1;
-    }
+    // @Override
+    // public int compareTo(Node other) {
+    //     if (this.dist < other.dist) {
+    //         return -1; // 음수가 더 높은 우선순위 
+    //     }
+    //     return 1;
+    // }
 }
 
 public class Main {
@@ -37,7 +37,7 @@ public class Main {
         }
         d[src] = 0;
 
-        PriorityQueue<Node> pq = new PriorityQueue<>();
+        PriorityQueue<Node> pq = new PriorityQueue<>((o1, o2)-> o1.getDist() - o2.getDist());
         pq.offer(new Node(src, 0));
 
         while (!pq.isEmpty()) {
