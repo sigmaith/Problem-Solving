@@ -46,6 +46,7 @@ public class Main {
 
     static int dp_tree(int node){
         if (node != 1 && adj.get(node).size() == 1) { // leaf node
+            // node != 1 이부분!(20%->accept)
             return 0;
         }
         else{
@@ -57,7 +58,7 @@ public class Main {
             }
             int size;
             if (node == 1) {
-                size = adj.get(node).size();
+                size = adj.get(node).size(); // 이부분!(20%->accept)
             } else {
                 size = adj.get(node).size() - 1;
             }
