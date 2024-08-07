@@ -14,14 +14,14 @@ public class Main {
         long[] arr = new long[n];
         long[] sum = new long[n];
         long[] remainder = new long[m];
-        long result = 0;
+        long result = 0; // (틀렸습니다 -> 100)
 
         st = new StringTokenizer(br.readLine());
         long s = 0;
         for (int i = 0; i < n; i++) {
             arr[i] = Long.valueOf(st.nextToken()); // 원본 배열 저장
             s += arr[i]; sum[i] = s; // 합 배열 저장
-            int mod = (int)(s % m); 
+            int mod = (int)(s % m); // (ArrayIndexOutOfBounds -> 틀렸습니다)
             remainder[mod]++; // 나머지 개수 갱신 
             if (mod == 0) {
                 result += 1;
