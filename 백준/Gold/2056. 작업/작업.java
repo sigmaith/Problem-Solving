@@ -38,40 +38,24 @@ public class Main {
             if (inDegree[i] == 0) { 
                 // 작업들 중에는, 그것에 대해 선행 관계에 있는 작업이 하나도 없는 작업이 반드시 하나 이상 존재한다. 
                 //(1번 작업이 항상 그러하다)
-                q.offerLast(i); // 진입차수가 0인 모든 정점을 넣어야 해.(중요!)
+                q.offerLast(i); // 진입차수가 0인 모든 정점을 넣어야 함.(중요!)
             }
         }
-        
-        // System.out.println(Arrays.toString(time));
-        // System.out.println(Arrays.toString(dp));
 
         while (!q.isEmpty()) {
             int id = q.pollFirst();
-            // System.out.println("id = " + id);
-            
+
             for (int next: adj.get(id)) {
-                // System.out.println("de + time = " + (dp[id] + time[next]));
-                dp[next] = Math.max(dp[next], dp[id] + time[next]); // 갱신됐을때만 하면안됨
+                dp[next] = Math.max(dp[next], dp[id] + time[next]); // 갱신됐을 때만 하면 안됨!
                 inDegree[next]--;
                 if (inDegree[next] == 0) { 
                     q.offer(next);
                 }
             }
         }
-        // System.out.println(Arrays.toString(time));
-        // System.out.println(Arrays.toString(dp));
-
-        boolean isAllSeparated = true;
-        for (int i = 1; i <= v; i++) {
-            if (inDegree[i] != 0) {
-                isAllSeparated = false;
-                break;
-            }
-        }
-
         int result = 0;
         for (int i = 1; i <= v; i++) {
-            result = Math.max(result, dp[i]); // 전체 dp 배열에서 최대값을 찾음
+            result = Math.max(result, dp[i]); // 전체 dp 배열에서 최대값을 찾음 (4 -> 100)
         }
         bw.write(result + "\n");
         bw.flush();
