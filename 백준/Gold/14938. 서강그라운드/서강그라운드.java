@@ -38,14 +38,29 @@ public class Main {
             } // 지역마다 거리 초기화 필요
 
             dist[src] = 0;
+            int items = 0;
+            boolean[] visited = new boolean[n + 1];
+
             PriorityQueue<int[]> pq = new PriorityQueue<>(((o1, o2) -> {return Integer.compare(o1[1], o2[1]);})); // cost 비교
             pq.offer(new int[]{src, 0});
             while (!pq.isEmpty()) {
+                boolean allvisited = true;
+                for (int i = 1; i <= n; i++) {
+                    if (!visited[i]) {
+                        allvisited = false;
+                    }
+                }
+                if (allvisited) break;
+
                 int[] now = pq.poll();
                 int nowReg = now[0];
                 int nowCost = now[1];
                 if (dist[nowReg] < nowCost) {
                     continue;
+                }
+                if (!visited[nowReg] && nowCost <= m) { // 방문 안했고, 도달가능한 거리
+                    items += regionItems[nowReg];
+                    visited[nowReg] = true;
                 }
                 for (int[] info: adj.get(nowReg)) {
                     int nextReg = info[0];
@@ -54,13 +69,6 @@ public class Main {
                         dist[nextReg] = nowCost + cost; // 업데이트
                         pq.offer(new int[]{nextReg, dist[nextReg]});
                     }
-                }
-            } // 지역마다 dijkstra ~ing
-
-            int items = 0;
-            for (int i = 1; i <= n; i++) {
-                if (dist[i] <= m) {
-                    items += regionItems[i];
                 }
             }
             if (maxItems < items) {
