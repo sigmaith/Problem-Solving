@@ -1,5 +1,4 @@
 // boj 1644 소수의 연속합
-import java.io.*;
 import java.util.*;
 
 public class Main {
@@ -29,11 +28,11 @@ public class Main {
 
     private static int getContinuousPrimeNumSum(boolean[] prime, int N) {
         int result = 0, A = 2, B = 0;
-        // pointer a <= pointer b
-        // 종료조건: 배열[a] 가 N에 도달했을 경우 추가하고 종료..
+
         int sum = 0;
         while (true) {
             if ((B == N && sum == N) || B > N) {
+            // 소수인 경우 / 소수가 아닌 경우
                 break;
             }
             while (sum < N && B <= N) {
