@@ -1,5 +1,4 @@
-
-// #1761 정점들의 거리
+// boj 1761 정점들의 거리
 import java.io.*;
 import java.util.*;
 
@@ -16,25 +15,23 @@ class Node{
 
 public class Main {
     static int[][] parent;
+    static int[][] cost;
     static int[] depth;
-    static boolean[] isCounted;
     static ArrayList<ArrayList<Node>> graph;
+    static int kmax;
 
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         StringTokenizer st;
 
-        int n = Integer.parseInt(br.readLine());
-        parent = new int[n + 1][2]; // 부모 노드 정보 + cost 저장
-        depth = new int[n + 1]; // 깊이
-        isCounted = new boolean[n + 1]; // 깊이가 계산 되었는지 여부
-        graph = new ArrayList<ArrayList<Node>>();
-        for (int i = 0; i <= n; i++) {
-            graph.add(new ArrayList<Node>());
+        int v = Integer.parseInt(br.readLine()); // 정점 개수
+        graph = new ArrayList<>(); // 인접 리스트
+        for (int i = 0; i <= v; i++) {
+            graph.add(new ArrayList<>());
         } // graph 생성 및 초기화
 
-        for (int i = 1; i < n; i++) {
+        for (int i = 1; i < v; i++) {
             st = new StringTokenizer(br.readLine());
             int a = Integer.parseInt(st.nextToken());
             int b = Integer.parseInt(st.nextToken());
@@ -42,16 +39,34 @@ public class Main {
 
             graph.get(a).add(new Node(b, cost));
             graph.get(b).add(new Node(a, cost));
+        } // 인접 리스트
+
+        depth = new int[v + 1]; // 깊이
+        int temp = 1;
+        kmax = 0;
+        while (temp <= v) {
+            temp <<= 1;
+            kmax += 1;
         }
+        parent = new int[kmax + 1][v + 1]; // 조상 정보 sparse table
+        cost = new int[kmax + 1][v + 1]; // 비용 정보 sparse table
 
         dfs(1, 0); // top-down 형식으로 깊이 기록, 부모 기록
+
+        for (int k = 1; k <= kmax; k++) {
+            for (int n = 1; n <= v; n++) {
+                parent[k][n] = parent[k-1][parent[k-1][n]];
+                cost[k][n] = cost[k-1][n] + cost[k-1][parent[k-1][n]];
+            }
+        }
+
         int m = Integer.parseInt(br.readLine());
         for (int i = 0; i < m; i++) {
             st = new StringTokenizer(br.readLine());
             int a = Integer.parseInt(st.nextToken());
             int b = Integer.parseInt(st.nextToken());
 
-            int result = lca(a, b); 
+            int result = findCostToLCA(a, b);
             bw.write(result + "\n");
         }
         bw.flush();
@@ -59,38 +74,50 @@ public class Main {
         br.close();
     }
 
-    static void dfs(int x, int dep) {
-        isCounted[x] = true; // 방문 체크
-        depth[x] = dep;
-        for (Node node : graph.get(x)) {
-            int id = node.getId();
-            int cost = node.getCost();
-            if (isCounted[id]) { // 방문 여부 체크
-                continue;
+    static void dfs(int node, int dep) {
+        depth[node] = dep;
+        for (Node next : graph.get(node)) {
+            int nextId = next.getId();
+            int nextCost = next.getCost();
+            if (nextId != parent[0][node]) { // 방문 여부 체크
+                parent[0][nextId] = node;
+                cost[0][nextId] = nextCost;
+                dfs(nextId, dep + 1);
             }
-            parent[id][0] = x;
-            parent[id][1] = cost;
-            dfs(id, dep + 1);
         }
     }
 
-    static int lca(int a, int b) {
-        int result = 0;
-        while (depth[a] != depth[b]) { // 깊이가 더 깊은것을 위로 끌어올리기 (높이 맞추기)
-            if (depth[a] > depth[b]) {
-                result += parent[a][1];
-                a = parent[a][0];
-            } else {
-                result += parent[b][1];
-                b = parent[b][0];
+    static int findCostToLCA(int a, int b) {
+        if (depth[a] > depth[b]) { // 더 깊은 depth가 b가 되도록 변경
+            int temp = a;
+            a = b;
+            b = temp;
+        }
+
+        int ret = 0;
+        for (int k = kmax; k >= 0; k--) { // depth 빠르게 맞추기
+            if (Math.pow(2, k) <= depth[b] - depth[a]) {
+                if (depth[a] <= depth[parent[k][b]]) {
+                    ret += cost[k][b];
+                    b = parent[k][b];
+                }
             }
         }
-        while (a != b) { // a,b 같이 점프 뿅뿅뿅
-            result += parent[a][1];
-            result += parent[b][1];
-            a = parent[a][0];
-            b = parent[b][0];
+
+        for (int k = kmax; k >= 0; k--) { // 둘 모두 끌어올리기
+            if (parent[k][a] != parent[k][b]) {
+                ret += (cost[k][a] + cost[k][b]);
+                a = parent[k][a];
+                b = parent[k][b];
+            }
         }
-        return result; // 같아지면 반환
+
+        int LCA = a;
+        if (a != b) {
+            ret += (cost[0][a] + cost[0][b]);
+            LCA = parent[0][LCA];
+        }
+
+        return ret;
     }
 }
