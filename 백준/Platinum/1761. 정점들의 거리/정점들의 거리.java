@@ -48,8 +48,8 @@ public class Main {
             temp <<= 1;
             kmax += 1;
         }
-        parent = new int[25][v + 1]; // 조상 정보 sparse table
-        cost = new int[25][v + 1]; // 비용 정보 sparse table
+        parent = new int[17][v + 1]; // 조상 정보 sparse table
+        cost = new int[17][v + 1]; // 비용 정보 sparse table
 
         dfs(1, 0); // top-down 형식으로 깊이 기록, 부모 기록
 
