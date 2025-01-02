@@ -1,9 +1,7 @@
 SELECT c.CAR_ID, c.CAR_TYPE, 
         ROUND(c.DAILY_FEE * (100 - p.DISCOUNT_RATE) / 100 * 30, 0) AS FEE 
 FROM CAR_RENTAL_COMPANY_CAR c
-    # 대여 기록 중에 11/1 ~ 11/30 기록이 있으면 배제해야 하는데 어떻게 하지?
-    # JOIN CAR_RENTAL_COMPANY_RENTAL_HISTORY h
-    # ON c.CAR_ID = h.CAR_ID
+    # 대여 기록 중에 11/1 ~ 11/30 기록이 있으면 배제해야 하는데 어떻게 하지? -> 아래 답
     JOIN (SELECT p.CAR_TYPE, p.DURATION_TYPE, p.DISCOUNT_RATE 
           FROM CAR_RENTAL_COMPANY_DISCOUNT_PLAN p 
           WHERE p.DURATION_TYPE = '30일 이상') p
