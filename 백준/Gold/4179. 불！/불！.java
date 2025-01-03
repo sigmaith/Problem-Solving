@@ -76,7 +76,7 @@ public class Main {
 
         for (int j = 0; j < C; j++) {
             if (timePerson[0][j] != -1 && (timeFire[0][j] == -1 ||
-                    (timeFire[0][j] != -1 && timePerson[0][j] < timeFire[0][j]))) {
+                    (timeFire[0][j] != -1 && timePerson[0][j] < timeFire[0][j]))) { // 사람이 도달한 경우에 대해 불이 도달하지 않았거나 불보다 먼저 도달한 경우
                 canEscape = true;
                 if (time > timePerson[0][j] + 1) {
                     time = timePerson[0][j] + 1;
