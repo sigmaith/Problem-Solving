@@ -5,13 +5,7 @@ FROM MEMBER_PROFILE m
     JOIN (SELECT r3.MEMBER_ID, COUNT(*) as COUNT
             FROM REST_REVIEW r3
             GROUP BY r3.MEMBER_ID
-            ORDER BY COUNT(*) DESC) r2
+            ORDER BY COUNT(*) DESC
+            LIMIT 1) r2
     ON r.MEMBER_ID = r2.MEMBER_ID
-    JOIN (SELECT COUNT(*) as COUNT
-                    FROM REST_REVIEW r2
-                    GROUP BY R2.MEMBER_ID
-                    ORDER BY COUNT(*) DESC
-                    LIMIT 1) r3
-    ON r2.COUNT = r3.COUNT
 ORDER BY r.REVIEW_DATE ASC, r.REVIEW_TEXT ASC;
-
