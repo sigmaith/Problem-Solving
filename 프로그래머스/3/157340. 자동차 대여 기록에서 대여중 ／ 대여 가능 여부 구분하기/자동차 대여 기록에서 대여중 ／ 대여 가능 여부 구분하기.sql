@@ -1,13 +1,13 @@
-SELECT H.CAR_ID AS CAR_ID,
-       CASE
-           WHEN EXISTS (
-               SELECT 1
-               FROM CAR_RENTAL_COMPANY_RENTAL_HISTORY H2
-               WHERE H.CAR_ID = H2.CAR_ID
-                 AND '2022-10-16' BETWEEN H2.START_DATE AND H2.END_DATE
-           ) THEN '대여중'
-           ELSE '대여 가능'
-       END AS AVAILABILITY
+SELECT H.CAR_ID CAR_ID,
+        CASE 
+            WHEN EXISTS (
+                SELECT 1
+                FROM CAR_RENTAL_COMPANY_RENTAL_HISTORY H2
+                WHERE H.CAR_ID = H2.CAR_ID
+                    AND '2022-10-16' BETWEEN H2.START_DATE AND H2.END_DATE
+            ) THEN '대여중'
+            ELSE '대여 가능'
+        END AS AVAILABILITY
 FROM CAR_RENTAL_COMPANY_RENTAL_HISTORY H
 GROUP BY H.CAR_ID
-ORDER BY H.CAR_ID DESC;
+ORDER BY H.CAR_ID DESC
